@@ -3,9 +3,8 @@
   "description": "publish a npm package to the keplr private npm registry.",
   "iconName": "npm",
   "categories": [
-      "NPM",
-      "JS",
-      "lib"
+      "TypeScript",
+      "JavaScript"
   ],
   "filePatterns": [
       "package.json$"
