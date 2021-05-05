@@ -1,0 +1,13 @@
+{
+  "name": "Publish NPM package",
+  "description": "publish a npm package to the keplr private npm registry.",
+  "iconName": "npm",
+  "categories": [
+      "NPM",
+      "JS",
+      "lib"
+  ],
+  "filePatterns": [
+      "package.json$"
+  ]
+}
