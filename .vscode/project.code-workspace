@@ -1,0 +1,13 @@
+{
+    "folders": [
+        { "path": "./" },
+        { "path": "../.github" },
+        { "path": "../pr-comment" }
+    ],
+    "settings": {
+        "files.exclude": {
+            "node_modules/": true
+        },
+
+    }
+}
