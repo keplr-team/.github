@@ -62774,10 +62774,12 @@ var __webpack_exports__ = {};
 __nccwpck_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(7799);
 /* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_cache__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(5438);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var hasha__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(4933);
-/* harmony import */ var hasha__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(hasha__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(2186);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(5438);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var hasha__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(4933);
+/* harmony import */ var hasha__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__nccwpck_require__.n(hasha__WEBPACK_IMPORTED_MODULE_3__);
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -62790,14 +62792,16 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 
+
 const paths = [
     '~/.npm',
 ];
 console.log('Restoring NPM cache');
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const hash = yield (0,hasha__WEBPACK_IMPORTED_MODULE_2__.fromFile)('package-lock.json', { algorithm: 'md5' });
-        const key = 'npm-keplr-cache-' + hash + '-' + _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId;
+        const path = (0,_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('path');
+        const hash = yield (0,hasha__WEBPACK_IMPORTED_MODULE_3__.fromFile)(`${path.length > 0 ? path + '/' : ''}package-lock.json`, { algorithm: 'md5' });
+        const key = 'npm-keplr-cache-' + hash + '-' + _actions_github__WEBPACK_IMPORTED_MODULE_2__.context.runId;
         const restoreKeys = [
             'npm-keplr-cache-' + hash
         ];

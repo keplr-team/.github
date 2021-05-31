@@ -1,5 +1,5 @@
 import { saveCache } from '@actions/cache';
-import { info, warning } from '@actions/core';
+import { info, warning, getInput } from '@actions/core';
 import { context } from '@actions/github';
 import { fromFile } from 'hasha';
 
@@ -7,9 +7,9 @@ const paths = [
     '~/.npm',
 ]
 
-
 async function run() {
-    const hash = await fromFile('package-lock.json', { algorithm: 'md5' });
+    const path = getInput('path')
+    const hash = await fromFile(`${path.length>0 ? path+'/' : ''}package-lock.json`, { algorithm: 'md5' });
 
     const key = 'npm-keplr-cache-' + hash + '-' + context.runId;
     info('saving NPM cache ' + key)

@@ -1,5 +1,10 @@
 name: 'Npm cache'
 description: 'Cache npm dependencies'
+inputs:
+  path:
+    description: "Path of files"
+    default: ""
+    required: false
 runs:
   using: 'node12'
   main: 'restore/index.js'
