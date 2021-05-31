@@ -1,9 +1,11 @@
 {
     "folders": [
+        { "path": "../", "name": "ROOT" },
         { "path": "./" },
         { "path": "../.github" },
         { "path": "../pr-comment" },
-        { "path": "../test-summary" }
+        { "path": "../test-summary" },
+        { "path": "../npm-cache" }
     ],
     "settings": {
         "files.exclude": {
