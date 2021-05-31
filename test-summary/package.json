@@ -1,0 +1,11 @@
+{
+  "name": "action-test-summary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./action.sh",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:keplr-team/action-test-summary.git"
+  },
+  "license": "MIT"
+}
