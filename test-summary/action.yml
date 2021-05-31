@@ -1,0 +1,21 @@
+name: "Test Summary"
+description: "Retrieve test summary from test run and aggregate coverage-final.json file."
+author: "keplr"
+inputs:
+  path:
+    description: "Path of files"
+    default: "./test/"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: ls -lah ${{ inputs.path }}
+    - name: Test file
+      shell: bash
+      run: |
+        jq -s -r 'map({ numFailedTestSuites, numFailedTests, numPassedTestSuites, numPassedTests, numTotalTestSuites, numTotalTests }) | map(to_entries) | add | group_by(.key) | map({key: .[0].key, value: map(.value) | add})| .[] | "\(.key)=\(.value)"' ${{ inputs.path }}/**/*.json >> $GITHUB_ENV
+
+    - name: Coverage file
+      shell: bash
+      run: jq -s 'reduce .[].coverageMap as $item ({}; . * $item)' ${{ inputs.path }}/**/*.json > coverage-final.json

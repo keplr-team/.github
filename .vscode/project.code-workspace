@@ -2,7 +2,8 @@
     "folders": [
         { "path": "./" },
         { "path": "../.github" },
-        { "path": "../pr-comment" }
+        { "path": "../pr-comment" },
+        { "path": "../test-summary" }
     ],
     "settings": {
         "files.exclude": {
