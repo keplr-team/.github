@@ -1,0 +1,22 @@
+name: Npm cache
+
+on:
+  pull_request:
+    paths:
+      - 'npm-cache/**'
+
+env:
+  CI: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd ./npm-cache && cp package-lock.json ../ && cp package.json ../
+      - uses: ./npm-cache
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm ci
+
