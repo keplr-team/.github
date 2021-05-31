@@ -1,4 +1,5 @@
 import { restoreCache } from '@actions/cache';
+import { getInput } from '@actions/core';
 import { context } from '@actions/github';
 import { fromFile } from 'hasha';
 
@@ -6,11 +7,11 @@ const paths = [
     '~/.npm',
 ]
 
-
 console.log('Restoring NPM cache')
 
 async function run() {
-    const hash = await fromFile('package-lock.json', { algorithm: 'md5' });
+    const path = getInput('path')
+    const hash = await fromFile(`${path.length>0 ? path+'/' : ''}package-lock.json`, { algorithm: 'md5' });
 
     const key = 'npm-keplr-cache-' + hash + '-' + context.runId;
     const restoreKeys = [

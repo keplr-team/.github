@@ -62798,7 +62798,8 @@ const paths = [
 ];
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const hash = yield (0,hasha__WEBPACK_IMPORTED_MODULE_3__.fromFile)('package-lock.json', { algorithm: 'md5' });
+        const path = (0,_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('path');
+        const hash = yield (0,hasha__WEBPACK_IMPORTED_MODULE_3__.fromFile)(`${path.length > 0 ? path + '/' : ''}package-lock.json`, { algorithm: 'md5' });
         const key = 'npm-keplr-cache-' + hash + '-' + _actions_github__WEBPACK_IMPORTED_MODULE_2__.context.runId;
         (0,_actions_core__WEBPACK_IMPORTED_MODULE_1__.info)('saving NPM cache ' + key);
         yield (0,_actions_cache__WEBPACK_IMPORTED_MODULE_0__.saveCache)(paths, key);

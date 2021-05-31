@@ -1,5 +1,5 @@
 {
-  "name": "@keplr/action-npm-cache",
+  "name": "npm-cache",
   "version": "1.0.0",
   "description": "Github action adding a cache around npm",
   "main": "index.js",
