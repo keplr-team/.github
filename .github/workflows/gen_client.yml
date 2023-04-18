@@ -1,0 +1,52 @@
+name: Generate the client
+
+on:
+  workflow_call:
+    inputs:
+      APP_TIER:
+        required: true
+        type: string
+      NODE_ENV:
+        required: true
+        type: string
+# Use secrets: inherit to pass secrets from the caller to this workflow
+
+jobs:
+  GenApiClient:
+    name: Generate API Client
+    runs-on: ubuntu-latest
+    env:
+      APP_TIER: ${{ inputs.APP_TIER }}
+      NODE_ENV: ${{ inputs.NODE_ENV }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: composite-puller token
+        id: composite_puller
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: '172918'
+          private_key: ${{ secrets.GH_COMPOSITE_PULLER }}
+          installation_id: '23320361'
+
+      - name: Checkout Keplr common Actions repo
+        uses: actions/checkout@v3
+        with:
+          repository: keplr-team/.github-private
+          token: ${{ steps.composite_puller.outputs.token }}
+          path: .github/composites
+      
+      - name: docker-compose
+        shell: bash
+        continue-on-error: true # In case there is no need
+        run: docker-compose up -d
+
+      - name: Generate Client
+        uses: ./.github/composites/cd/npm/api_client_publish
+      
+      - name: Notice
+        run: |
+          echo "::notice title="Api Client":: Client generated and published on the registry"

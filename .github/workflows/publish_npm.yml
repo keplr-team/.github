@@ -1,0 +1,58 @@
+name: Publish lib to NPM
+
+on:
+  workflow_call:
+    inputs:
+      BUILD_ARTIFACT_NAME:
+        required: true
+        type: string
+      PATH_TO_ARTIFACT:
+        required: false
+        type: string
+        default: ./ # by default we upload the artifact on the root directory
+
+jobs:
+# ---------------------------------------------------------------- 
+# ------------------------- NPM PUBLISH --------------------------
+# ----------------------------------------------------------------
+  Publish: 
+    name: Publish to NPM 
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: composite-puller token
+        id: composite_puller
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: '172918'
+          private_key: ${{ secrets.GH_COMPOSITE_PULLER }}
+          installation_id: '23320361'
+
+      # Contains every Common Actions
+      - name: Checkout Keplr Actions repo
+        uses: actions/checkout@v3
+        with:
+          repository: keplr-team/.github-private
+          token: ${{ steps.composite_puller.outputs.token }}
+          path: .github/composites
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.BUILD_ARTIFACT_NAME }}
+          path: ${{ inputs.PATH_TO_ARTIFACT }}
+      
+      - name: publish 
+        shell: bash
+        run: |
+          export NPM_TOKEN=${{ env.NPM_TOKEN }}
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          if ${{ !startsWith(github.ref, 'refs/tags/') }}; then
+            npm version prerelease --git-tag-version false --preid=${{ github.sha }}
+          fi
+          npm publish
