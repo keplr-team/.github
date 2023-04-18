@@ -22,4 +22,6 @@ runs:
         git fetch origin 'refs/tags/*:refs/tags/*'
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+        chmod +x ${{ github.action_path }}/bump.sh
         ${{ github.action_path }}/bump.sh "${{ inputs.tag }}"
