@@ -25,22 +25,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: composite-puller token
-        id: composite_puller
-        uses: tibdex/github-app-token@v1
-        with:
-          app_id: '172918'
-          private_key: ${{ secrets.GH_COMPOSITE_PULLER }}
-          installation_id: '23320361'
-
-      # Contains every Common Actions
-      - name: Checkout Keplr Actions repo
-        uses: actions/checkout@v3
-        with:
-          repository: keplr-team/.github-private
-          token: ${{ steps.composite_puller.outputs.token }}
-          path: .github/composites
-      
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:

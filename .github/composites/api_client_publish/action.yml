@@ -1,0 +1,28 @@
+# API Client push on NPM composite 
+# When the trigger event is tagless, it will publish the package with this kind of version tag 1.1.1~23a3a
+# Otherwise, (i.e workflow dispatch or push tagged), it will tag normally the version 1.1.1 
+
+name: Client npm publish 
+description: 'publish api client to npm'
+
+runs:
+  using: composite
+
+  steps:
+    - name: build
+      shell: bash
+      run: npm run build
+
+    - name: Generate
+      shell: bash
+      run: |
+        npm run generateInternalClient
+        cd /tmp/generated/@keplr/*
+        npm install
+        npm run build
+        export NPM_TOKEN=${{ env.NPM_TOKEN }}
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        if ${{ !startsWith(github.ref, 'refs/tags/') }}; then
+          npm version prerelease --git-tag-version false --preid=${{ github.sha }}
+        fi
+        npm publish
