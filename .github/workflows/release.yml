@@ -54,9 +54,14 @@ jobs:
       - name: Pull
         shell: bash
         run: git pull
+
+      - uses: actions/checkout@v3
+        with:
+          repository: keplr-team/.github
+          path: .github/public
       
       - name: Tag
-        uses: ./.github/composites/tag
+        uses: ./.github/public/composites/tag
         with:
           tag: ${{ needs.NpmVersionUpdate.outputs.NEW_VERSION }}
 

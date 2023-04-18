@@ -29,8 +29,13 @@ jobs:
         continue-on-error: true # In case there is no need
         run: docker-compose up -d
 
+      - uses: actions/checkout@v3
+        with:
+          repository: keplr-team/.github
+          path: .github/public
+
       - name: Generate Client
-        uses: ./.github/composites/api_client_publish
+        uses: ./.github/public/composites/api_client_publish
       
       - name: Notice
         run: |
